@@ -4,7 +4,7 @@
   "description": "A beautiful, Jesus Christ-centered King James Version Bible application.",
   "main": "index.html",
   "scripts": {
-    "dev": "npx http-server -p 3000"
+    "dev": "npx http-server www -p 3000"
   },
   "keywords": [
     "bible",
@@ -15,6 +15,12 @@
   "author": "Antigravity",
   "license": "MIT",
   "devDependencies": {
+    "@capacitor/cli": "^8.3.4",
     "http-server": "^14.1.1"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.3.4",
+    "@capacitor/core": "^8.3.4",
+    "@capacitor/ios": "^8.3.4"
   }
 }

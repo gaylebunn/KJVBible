@@ -1,0 +1,8 @@
+{
+  "appId": "com.kjvbible.reader",
+  "appName": "KJV Bible",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}

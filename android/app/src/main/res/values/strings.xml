@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">KJV Bible</string>
+    <string name="title_activity_main">KJV Bible</string>
+    <string name="package_name">com.kjvbible.reader</string>
+    <string name="custom_url_scheme">com.kjvbible.reader</string>
+</resources>
