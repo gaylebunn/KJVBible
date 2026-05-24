@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Holy Bible - KJV Christ-Centered Reader</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="A beautiful, interactive King James Version Bible application. Explore, filter, search, and bookmark scripture with an aesthetic inspired by Jesus Christ, featuring the Plan of Salvation and Names of Jesus.">
+  <meta name="keywords" content="KJV Bible, King James Version, Jesus Christ, Search Scripture, Bible Verses, Plan of Salvation, Names of Jesus">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="style.css?v=3.2.0">
+</head>
+<body>
+
+  <!-- Top App Bar -->
+  <header class="app-header">
+    <div class="brand-container" id="btn-toggle-sidebar" title="Toggle Books List">
+      <button class="control-btn" id="sidebar-toggle-icon">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div>
+        <h1 class="brand-title">THE HOLY BIBLE</h1>
+        <span class="brand-subtitle">King James Version <span class="app-version" style="font-size: 0.7rem; opacity: 0.75; margin-left: 0.5rem; border: 1px solid rgba(255,255,255,0.25); padding: 0.05rem 0.3rem; border-radius: 4px; font-weight: 600; font-family: var(--font-sans); vertical-align: middle;">v1.0.0</span></span>
+      </div>
+    </div>
+
+    <!-- Central Navigation Info -->
+    <div class="bible-location" id="location-display" title="Click to change chapter">
+      <span class="bible-location-book" id="current-book-name">Genesis</span>
+      <span class="bible-location-separator"><i class="fas fa-chevron-right" style="font-size: 0.8rem;"></i></span>
+      <span class="bible-location-chapter" id="current-chapter-num">1</span>
+      <i class="fas fa-caret-down" style="color: var(--accent-color); font-size: 0.9rem; margin-left: 0.25rem;"></i>
+    </div>
+
+    <!-- Header Controls -->
+    <div class="header-controls">
+      <!-- Search Trigger -->
+      <button class="control-btn" id="btn-open-search" title="Search Scriptures (Ctrl+F)">
+        <i class="fas fa-search"></i> <span style="font-size: 0.85rem; margin-left: 0.25rem; font-family: var(--font-sans); font-weight: 600;">Search</span>
+      </button>
+
+      <!-- View Style Toggle -->
+      <button class="control-btn" id="btn-toggle-view" title="Toggle Verse/Paragraph Mode">
+        <i class="fas fa-list-ol"></i>
+      </button>
+
+      <!-- Font Size Controller -->
+      <div class="font-adjuster" title="Adjust Font Size">
+        <button class="font-btn" id="font-dec"><i class="fas fa-minus" style="font-size: 0.75rem;"></i></button>
+        <span class="font-size-indicator" id="font-size-val">100%</span>
+        <button class="font-btn" id="font-inc"><i class="fas fa-plus" style="font-size: 0.75rem;"></i></button>
+      </div>
+
+      <!-- Theme Dots -->
+      <div class="theme-selector" title="Select Theme">
+        <div class="theme-dot theme-dot-light active" data-theme="light" title="Light Theme"><i class="fas fa-sun"></i></div>
+        <div class="theme-dot theme-dot-parchment" data-theme="parchment" title="Parchment Theme"><i class="fas fa-scroll"></i></div>
+        <div class="theme-dot theme-dot-dark" data-theme="dark" title="Divine Night Theme"><i class="fas fa-moon"></i></div>
+        <div class="theme-dot theme-dot-crimson" data-theme="crimson" title="Royal Crimson Theme"><i class="fas fa-cross"></i></div>
+        <div class="theme-dot theme-dot-olive" data-theme="olive" title="Gethsemane Olive Theme"><i class="fas fa-leaf"></i></div>
+        <div class="theme-dot theme-dot-sapphire" data-theme="sapphire" title="Sinai Sapphire Theme"><i class="fas fa-gem"></i></div>
+        <div class="theme-dot theme-dot-transfiguration" data-theme="transfiguration" title="Transfiguration Theme"><i class="fas fa-mountain"></i></div>
+        <div class="theme-dot theme-dot-geneva" data-theme="geneva" title="Geneva Press Theme"><i class="fas fa-book"></i></div>
+      </div>
+
+      <!-- Life of Christ Timeline Quick Trigger -->
+      <button class="control-btn" id="btn-timeline-trigger" style="color: var(--accent-color); border-color: rgba(212,175,55,0.2); background: rgba(212,175,55,0.05);" title="Life of Christ Visual Timeline">
+        <i class="fas fa-hourglass-half"></i> <span style="font-size: 0.85rem; margin-left: 0.25rem; font-family: var(--font-sans); font-weight: 700;">Timeline</span>
+      </button>
+
+      <!-- Plan of Salvation Quick Trigger -->
+      <button class="control-btn" id="btn-gospel-trigger" style="color: var(--red-letter); border-color: rgba(176,26,32,0.2); background: var(--red-letter-bg);" title="The Gospel of Jesus Christ">
+        <i class="fas fa-cross"></i> <span style="font-size: 0.85rem; margin-left: 0.25rem; font-family: var(--font-sans); font-weight: 700;">Gospel</span>
+      </button>
+
+      <!-- Study Drawer Trigger -->
+      <button class="control-btn" id="btn-toggle-study" title="Toggle Study Panel">
+        <i class="fas fa-book-open"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="app-container">
+    
+    <!-- Sidebar - Left Panel (Book Selection) -->
+    <aside class="app-sidebar" id="sidebar-left">
+      <div class="sidebar-header">
+        <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.75rem;">
+          <div class="testament-selector" style="flex: 1;">
+            <button class="testament-btn active" id="btn-testament-all">All</button>
+            <button class="testament-btn" id="btn-testament-ot">Old</button>
+            <button class="testament-btn" id="btn-testament-nt">New</button>
+          </div>
+          <div class="width-adjuster">
+            <button class="width-btn" id="btn-left-width-dec" title="Decrease Width"><i class="fas fa-minus"></i></button>
+            <button class="width-btn" id="btn-left-width-inc" title="Increase Width"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="book-filter-container" style="margin-top: 0;">
+          <input type="text" class="book-search-input" id="book-search" placeholder="Filter books... (e.g. John, Rom)">
+        </div>
+      </div>
+      
+      <!-- Books Scroll List -->
+      <div class="book-list-container" id="book-list">
+        <!-- Dynamically Populated by app.js -->
+      </div>
+    </aside>
+
+    <!-- Left Resizer Divider -->
+    <div class="resize-divider resize-divider-left" id="resize-divider-left" title="Drag to resize Books sidebar"></div>
+
+    <!-- Main Reader - Center Panel -->
+    <main class="app-reader">
+      
+      <!-- Chapter Selection Grid (Toggled in reader header click) -->
+      <div class="chapter-grid-container" id="chapter-selector-grid">
+        <div class="chapter-grid-title">Select Chapter:</div>
+        <div class="chapter-grid" id="chapters-list-nums">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Quick Navigator Bar -->
+      <div class="reader-header">
+        <button class="chapter-btn" id="btn-prev-chapter">
+          <i class="fas fa-arrow-left"></i> Previous Chapter
+        </button>
+        
+        <button class="chapter-btn" id="btn-next-chapter">
+          Next Chapter <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- Reader Scrollable Container -->
+      <div class="reader-content" id="reader-scroll-container">
+        <div class="bible-text-container">
+          <h2 class="bible-text-chapter-title" id="bible-chapter-title">Genesis 1</h2>
+          <div id="bible-verses-display" class="verse-mode-block">
+            <!-- Verses Dynamically Loaded Here -->
+            <div class="empty-state">
+              <i class="fas fa-spinner fa-spin empty-state-icon"></i>
+              <p>Loading the Word of God...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right Resizer Divider -->
+    <div class="resize-divider resize-divider-right" id="resize-divider-right" title="Drag to resize Study Tools panel"></div>
+
+    <!-- Study Sidebar - Right Panel -->
+    <aside class="study-drawer" id="sidebar-right">
+      <div class="study-drawer-header">
+        <h3><i class="fas fa-circle-info" style="color: var(--accent-color); margin-right: 0.5rem;"></i>Study Tools</h3>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button class="control-btn" id="btn-backup-restore-trigger" title="Backup & Restore Data" style="color: var(--text-secondary);"><i class="fas fa-cloud-arrow-down"></i></button>
+          <div class="width-adjuster">
+            <button class="width-btn" id="btn-right-width-dec" title="Decrease Width"><i class="fas fa-minus"></i></button>
+            <button class="width-btn" id="btn-right-width-inc" title="Increase Width"><i class="fas fa-plus"></i></button>
+          </div>
+          <button class="control-btn" id="btn-close-study"><i class="fas fa-xmark"></i></button>
+        </div>
+      </div>
+      
+      <!-- Navigation tabs for Study Drawer -->
+      <div class="study-drawer-tabs">
+        <button class="study-tab-btn active" data-tab="devotional" title="Devotion"><i class="fas fa-heart"></i><span>Devotion</span></button>
+        <button class="study-tab-btn" data-tab="bookmarks" title="Bookmarks"><i class="fas fa-bookmark"></i><span>Bookmarks</span></button>
+        <button class="study-tab-btn" data-tab="highlights" title="Highlights"><i class="fas fa-highlighter"></i><span>Highlights</span></button>
+        <button class="study-tab-btn" data-tab="notes" title="Notes"><i class="fas fa-pen-to-square"></i><span>Notes</span></button>
+        <button class="study-tab-btn" data-tab="names-jesus" title="Names of Jesus"><i class="fas fa-crown"></i><span>Names</span></button>
+        <button class="study-tab-btn" data-tab="cross-refs" title="Cross-References"><i class="fas fa-circle-nodes"></i><span>Cross-Refs</span></button>
+        <button class="study-tab-btn" data-tab="visuals" title="Visuals"><i class="fas fa-image"></i><span>Visuals</span></button>
+        <button class="study-tab-btn" data-tab="maps" title="Maps"><i class="fas fa-map-location-dot"></i><span>Maps</span></button>
+      </div>
+
+      <!-- Dynamic content space based on selected tab -->
+      <div class="study-content-area" id="study-tab-content">
+        
+        <!-- Devotional Section (Default) -->
+        <div class="study-tab-pane" id="pane-devotional">
+          <div class="devotional-card">
+            <h4 class="devotional-title">Verse of the Day</h4>
+            <p class="devotional-verse" id="dev-verse-text">"For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."</p>
+            <div class="devotional-reference" id="dev-verse-ref">John 3:16</div>
+            <div class="devotional-reflection" id="dev-reflection-text">
+              Jesus Christ, the Son of God, is the supreme revelation of the Father's love. By laying down His life on the cross and rising from the dead, He offers free salvation and eternal life to everyone who trusts in Him. Seek Him today, and let His grace guide your steps.
+            </div>
+          </div>
+          <div style="text-align: center; margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem; align-items: center;">
+            <button class="chapter-btn" id="btn-new-devotional" style="margin: 0 auto; width: 100%; max-width: 280px; justify-content: center;">
+              <i class="fas fa-rotate"></i> Another Daily Devotion
+            </button>
+            <button class="chapter-btn btn-message-god" id="btn-message-god" style="margin: 0 auto; width: 100%; max-width: 280px; justify-content: center; background: linear-gradient(135deg, var(--accent-color), #c5a059); color: white; border: none; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: transform 0.2s, box-shadow 0.2s;">
+              <i class="fas fa-envelope-open-text" style="margin-right: 0.5rem;"></i> Message from God
+            </button>
+          </div>
+        </div>
+
+        <!-- Bookmarks Section -->
+        <div class="study-tab-pane" id="pane-bookmarks" style="display: none;">
+          <div id="bookmarks-list-container">
+            <!-- Populated dynamically -->
+            <div class="empty-state">
+              <i class="fas fa-bookmark empty-state-icon"></i>
+              <p>No bookmarks saved yet.</p>
+              <span style="font-size: 0.8rem; opacity: 0.8;">Double click or click a verse in the reader to bookmark or highlight it.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Highlights Section -->
+        <div class="study-tab-pane" id="pane-highlights" style="display: none;">
+          <div id="highlights-list-container">
+            <!-- Populated dynamically -->
+            <div class="empty-state">
+              <i class="fas fa-highlighter empty-state-icon"></i>
+              <p>No highlights saved yet.</p>
+              <span style="font-size: 0.8rem; opacity: 0.8;">Double click or click a verse in the reader and select a color to highlight it.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="study-tab-pane" id="pane-notes" style="display: none;">
+          <!-- Notes List View -->
+          <div id="notes-list-view">
+            <div class="notes-search-wrapper" style="margin-bottom: 0.75rem;">
+              <input type="text" id="notes-search" placeholder="Search notes... (e.g. faith, Gen 1)" style="width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); font-size: 0.85rem; outline: none;">
+            </div>
+            <div id="notes-list-container" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: calc(100vh - 350px); overflow-y: auto; padding-right: 2px;">
+              <!-- Populated dynamically -->
+              <div class="empty-state">
+                <i class="fas fa-pen-to-square empty-state-icon"></i>
+                <p>No study notes saved yet.</p>
+                <span style="font-size: 0.8rem; opacity: 0.8; display: block; margin-top: 0.5rem;">Click any verse and select "Add/Edit Note" to start writing.</span>
+              </div>
+            </div>
+          </div>
+          <!-- Note Editor View (Hidden by default) -->
+          <div id="note-editor-container" style="display: none;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+              <h4 id="note-editor-verse-title" style="font-family: var(--font-title); font-weight: 700; color: var(--primary-color); font-size: 1rem; margin: 0;">Genesis 1:1 Note</h4>
+              <button class="control-btn" id="btn-close-note-editor" title="Cancel Editing" style="padding: 0.25rem;"><i class="fas fa-xmark"></i></button>
+            </div>
+            <div id="note-editor-verse-text" style="font-family: var(--font-serif); font-style: italic; font-size: 0.85rem; line-height: 1.4; color: var(--text-secondary); background: rgba(0,0,0,0.02); padding: 0.5rem; border-left: 2px solid var(--accent-color); margin-bottom: 0.75rem; border-radius: 0 4px 4px 0;">
+              "In the beginning..."
+            </div>
+            <textarea id="note-editor-textarea" placeholder="Write your reflections, study notes, or prayers here..." rows="12" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-primary); font-family: var(--font-sans); font-size: 0.9rem; line-height: 1.5; resize: vertical; outline: none; margin-bottom: 0.75rem; box-sizing: border-box;"></textarea>
+            <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+              <button class="chapter-btn" id="btn-cancel-note" style="padding: 0.4rem 0.75rem; font-size: 0.85rem;">Cancel</button>
+              <button class="chapter-btn" id="btn-save-note" style="background-color: var(--accent-color); border-color: var(--accent-color); color: #fff; font-weight: 700; padding: 0.4rem 1rem; font-size: 0.85rem;">Save Note</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Names of Jesus Section -->
+        <div class="study-tab-pane" id="pane-names-jesus" style="display: none;">
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4;">
+            Discover the names and titles of Jesus Christ as revealed in scripture. Click any name to open its scriptural reference.
+          </p>
+          <div class="names-grid" id="jesus-names-list">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Cross-References Section -->
+        <div class="study-tab-pane" id="pane-cross-refs" style="display: none;">
+          <div class="cross-refs-active-container" style="margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+            <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); margin-bottom: 0.25rem;">Active Verse</div>
+            <div id="cross-refs-active-verse-title" style="font-family: var(--font-title); font-weight: 700; color: var(--primary-color); font-size: 1.1rem;">No Verse Selected</div>
+          </div>
+          <div id="cross-refs-list-container">
+            <div class="empty-state">
+              <i class="fas fa-circle-nodes empty-state-icon"></i>
+              <p>Select a verse to explore its cross-references.</p>
+              <span style="font-size: 0.8rem; opacity: 0.8; display: block; margin-top: 0.5rem;">Click any verse in the reader and select "Cross-References" from the menu.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visuals Tab Pane -->
+        <div class="study-tab-pane" id="pane-visuals" style="display: none;">
+          <div id="visuals-container">
+            <!-- Programmatically populated -->
+          </div>
+        </div>
+
+        <!-- Maps Tab Pane -->
+        <div class="study-tab-pane" id="pane-maps" style="display: none;">
+          <div class="maps-wrapper">
+            <!-- Map Toggle -->
+            <div class="map-selector-bar">
+              <button class="map-sel-btn active" data-map="world">Biblical World</button>
+              <button class="map-sel-btn" data-map="holyland">Holy Land</button>
+            </div>
+            <!-- Map SVG Container -->
+            <div class="map-viewport">
+              <div class="map-svg-container" id="map-svg-container">
+                <!-- SVG rendered here via JavaScript -->
+              </div>
+            </div>
+            <!-- Dynamic Info Panel -->
+            <div class="map-info-panel" id="map-info-panel">
+              <div class="map-info-placeholder">Select a location on the map or search below to explore.</div>
+            </div>
+            <!-- Search & List Panel -->
+            <div class="map-list-section">
+              <div class="map-search-wrapper">
+                <i class="fas fa-search map-search-icon"></i>
+                <input type="text" id="map-places-search" placeholder="Search places...">
+              </div>
+              <div class="map-places-list" id="map-places-list">
+                <!-- Programmatically populated -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Chapter & Book Summary Widget -->
+      <div class="chapter-summary-widget" id="chapter-summary-panel">
+        <div class="summary-widget-header" id="btn-toggle-summary-collapse">
+          <div class="summary-title-group">
+            <i class="fas fa-file-lines" style="color: var(--accent-color);"></i>
+            <h4>Scripture Summary</h4>
+          </div>
+          <button class="summary-toggle-btn" id="btn-summary-chevron">
+            <i class="fas fa-chevron-down"></i>
+          </button>
+        </div>
+        <div class="summary-widget-content" id="chapter-summary-content-wrapper">
+          <!-- Book Summary Section -->
+          <div class="summary-section">
+            <h5 class="summary-subtitle" id="book-summary-title">Genesis Summary</h5>
+            <p class="summary-text" id="book-summary-content">
+              Loading book summary...
+            </p>
+          </div>
+          <!-- Chapter Summary Section -->
+          <div class="summary-section">
+            <h5 class="summary-subtitle" id="chapter-summary-title">Genesis 1 Summary</h5>
+            <p class="summary-text" id="chapter-summary-content">
+              Loading chapter summary...
+            </p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Search Engine Overlay (Fullscreen Modal) -->
+  <div class="search-overlay" id="search-modal-container">
+    <div class="search-modal">
+      <div class="search-modal-header">
+        <div class="search-input-wrapper">
+          <input type="text" class="search-main-input" id="search-input" placeholder="Search the Scriptures... (e.g. 'faith', 'Jesus wept', 'love one another')" autocomplete="off">
+          <button class="search-close-btn" id="btn-close-search" title="Close Search"><i class="fas fa-xmark"></i></button>
+        </div>
+        
+        <div class="search-filters">
+          <!-- Testament selection -->
+          <select class="search-select" id="search-filter-testament">
+            <option value="all">All Testaments</option>
+            <option value="ot">Old Testament Only</option>
+            <option value="nt">New Testament Only</option>
+          </select>
+          
+          <!-- Book selection -->
+          <select class="search-select" id="search-filter-book" style="max-width: 150px;">
+            <option value="all">All Books</option>
+            <!-- Dynamically loaded -->
+          </select>
+          
+          <!-- Match Type checkboxes -->
+          <label class="search-checkbox-label">
+            <input type="checkbox" id="search-exact-phrase"> Exact Phrase
+          </label>
+          <label class="search-checkbox-label">
+            <input type="checkbox" id="search-case-sensitive"> Case Sensitive
+          </label>
+
+          <span class="search-results-info" id="search-status-text">Ready to search.</span>
+        </div>
+      </div>
+
+      <!-- Search results view -->
+      <div class="search-results-list" id="search-results-container">
+        <div class="empty-state">
+          <i class="fas fa-search-bible empty-state-icon" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+          <p>Search over 31,000 verses in the King James Version Bible.</p>
+          <span style="font-size: 0.85rem; opacity: 0.8; max-width: 400px; line-height: 1.4;">Enter a keyword or phrase above. You can filter results by specific books or testaments.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gospel / Salvation Modal -->
+  <div class="bible-modal" id="gospel-modal">
+    <div class="bible-modal-content">
+      <div class="bible-modal-header">
+        <h3 class="bible-modal-title" style="color: var(--red-letter);"><i class="fas fa-cross"></i> The Gospel of Jesus Christ</h3>
+        <button class="control-btn" id="btn-close-gospel"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="bible-modal-body">
+        <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; text-align: justify; font-family: var(--font-sans);">
+          The word <strong>"Gospel"</strong> means "Good News." It is the glorious message of how Jesus Christ saved us from sin and death, offering eternal life freely to all who believe. Here is the scriptural way of salvation:
+        </p>
+
+        <!-- Step 1 -->
+        <div class="salvation-step">
+          <div>
+            <span class="salvation-step-num">1</span>
+            <h4 class="salvation-step-title">The Need for Salvation</h4>
+          </div>
+          <p class="salvation-step-text">Every human being has sinned and is separated from God. We cannot save ourselves by our own good deeds.</p>
+          <div class="salvation-step-verse" data-ref="rm 3:23">"For all have sinned, and come short of the glory of God;"</div>
+          <span class="salvation-step-ref">Romans 3:23</span>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="salvation-step">
+          <div>
+            <span class="salvation-step-num">2</span>
+            <h4 class="salvation-step-title">The Penalty of Sin</h4>
+          </div>
+          <p class="salvation-step-text">The just punishment for sin is eternal death and separation from the holy presence of God.</p>
+          <div class="salvation-step-verse" data-ref="rm 6:23">"For the wages of sin is death; but the gift of God is eternal life through Jesus Christ our Lord."</div>
+          <span class="salvation-step-ref">Romans 6:23</span>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="salvation-step">
+          <div>
+            <span class="salvation-step-num">3</span>
+            <h4 class="salvation-step-title">The Provision: Jesus Christ</h4>
+          </div>
+          <p class="salvation-step-text">God loves us so much that He sent His Son, Jesus Christ, to die on the cross in our place, paying the full price for our sins, and rising again on the third day.</p>
+          <div class="salvation-step-verse" data-ref="rm 5:8">"But God commendeth his love toward us, in that, while we were yet sinners, Christ died for us."</div>
+          <span class="salvation-step-ref">Romans 5:8</span>
+          <div class="salvation-step-verse" data-ref="jo 3:16" style="margin-top: 0.5rem;">"For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."</div>
+          <span class="salvation-step-ref">John 3:16</span>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="salvation-step">
+          <div>
+            <span class="salvation-step-num">4</span>
+            <h4 class="salvation-step-title">The Promise: Salvation by Faith</h4>
+          </div>
+          <p class="salvation-step-text">Salvation is a free gift received by faith, not earned by our works. If we confess our sins, repent, and trust in Jesus as our Lord and Savior, we are saved.</p>
+          <div class="salvation-step-verse" data-ref="eph 2:8-9">"For by grace are ye saved through faith; and that not of yourselves: it is the gift of God: Not of works, lest any man should boast."</div>
+          <span class="salvation-step-ref">Ephesians 2:8-9</span>
+          <div class="salvation-step-verse" data-ref="rm 10:9" style="margin-top: 0.5rem;">"That if thou shalt confess with thy mouth the Lord Jesus, and shalt believe in thine heart that God hath raised him from the dead, thou shalt be saved."</div>
+          <span class="salvation-step-ref">Romans 10:9</span>
+        </div>
+
+        <!-- Acceptance Prayer Card -->
+        <div class="salvation-prayer-card">
+          <h4 class="salvation-prayer-title"><i class="fas fa-hands-praying"></i> A Prayer of Faith</h4>
+          <p class="salvation-prayer-text">
+            "Lord Jesus, I know that I am a sinner and I need Your forgiveness. I believe that You died on the cross for my sins and rose from the dead. I turn from my sins and place my trust in You alone as my Lord and Savior. Thank You for Your grace, Your love, and the free gift of eternal life. Amen."
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Life of Christ Visual Timeline Modal -->
+  <div class="bible-modal" id="timeline-modal">
+    <div class="bible-modal-content">
+      <div class="bible-modal-header">
+        <h3 class="bible-modal-title" style="color: var(--accent-color);"><i class="fas fa-hourglass-half"></i> Life of Jesus Christ</h3>
+        <button class="control-btn" id="btn-close-timeline"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="bible-modal-body">
+        <div class="timeline-intro">
+          <p>
+            Explore a visual, chronological timeline of the major events in the life, ministry, death, and resurrection of our Lord and Savior Jesus Christ. Click any scripture reference to navigate directly to the verse.
+          </p>
+          
+          <!-- Phase Filters -->
+          <div class="timeline-filters">
+            <button class="filter-btn active" data-phase="all">All Phases</button>
+            <button class="filter-btn" data-phase="prophecy">Prophecy & Birth</button>
+            <button class="filter-btn" data-phase="early-life">Early Life</button>
+            <button class="filter-btn" data-phase="ministry">Ministry & Miracles</button>
+            <button class="filter-btn" data-phase="teachings">Teachings & Parables</button>
+            <button class="filter-btn" data-phase="passion">Passion Week</button>
+            <button class="filter-btn" data-phase="resurrection">Resurrection & Ascension</button>
+          </div>
+        </div>
+        
+        <div class="timeline-wrapper">
+          <div class="timeline-line"></div>
+          <div id="timeline-events-container">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Verse Context Menu (Toggled on click) -->
+  <div class="context-menu" id="verse-context-menu">
+    <div class="context-menu-item" id="menu-bookmark" title="Bookmark"><i class="far fa-bookmark"></i><span>Bookmark</span></div>
+    <div class="context-menu-item" id="menu-note" title="Add/Edit Note"><i class="fas fa-pen-to-square"></i> Add/Edit Note</div>
+    <div class="context-menu-item" id="menu-copy"><i class="far fa-copy"></i> Copy Verse</div>
+    <div class="context-menu-item" id="menu-share"><i class="fas fa-share-nodes"></i> Share Reference</div>
+    <div class="context-menu-item" id="menu-crossrefs"><i class="fas fa-circle-nodes"></i> Cross-References</div>
+    <div class="context-menu-item" id="menu-card"><i class="fas fa-image"></i> Create Card</div>
+    <!-- Highlight selection -->
+    <div class="color-dot-container">
+      <div class="color-dot color-yellow" data-color="yellow" title="Highlight Yellow"></div>
+      <div class="color-dot color-green" data-color="green" title="Highlight Green"></div>
+      <div class="color-dot color-blue" data-color="blue" title="Highlight Blue"></div>
+      <div class="color-dot color-clear" data-color="clear" title="Clear Highlight"></div>
+    </div>
+  </div>
+
+  <!-- Scripture Card Generator Modal -->
+  <div class="card-overlay" id="card-modal-container">
+    <div class="card-modal">
+      <div class="card-modal-header">
+        <h3 class="card-modal-title"><i class="fas fa-image" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Scripture Card Creator</h3>
+        <button class="control-btn" id="btn-close-card" title="Close Creator"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="card-generator-layout">
+        
+        <!-- Controls Column -->
+        <div class="card-controls-panel">
+          
+          <!-- Aspect Ratio Selection -->
+          <div class="control-group">
+            <label class="control-label">Aspect Ratio</label>
+            <div class="aspect-selector-grid">
+              <button class="aspect-btn active" data-ratio="1-1">
+                <i class="fas fa-square"></i> Square (1:1)
+              </button>
+              <button class="aspect-btn" data-ratio="9-16">
+                <i class="fas fa-mobile-screen"></i> Portrait (9:16)
+              </button>
+              <button class="aspect-btn" data-ratio="16-9">
+                <i class="fas fa-desktop"></i> Landscape (16:9)
+              </button>
+            </div>
+          </div>
+
+          <!-- Color/Gradient Presets -->
+          <div class="control-group">
+            <label class="control-label">Background Style</label>
+            <div class="swatches-grid" id="bg-swatches-list">
+              <!-- Swatches loaded in JS -->
+            </div>
+          </div>
+
+          <!-- Font Choice -->
+          <div class="control-group">
+            <label class="control-label">Typography</label>
+            <div class="font-selector-row">
+              <select class="search-select" id="card-font-family" style="flex: 1;">
+                <option value="Cinzel">Cinzel (Classic Heading)</option>
+                <option value="Lora" selected>Lora (Elegant Serif)</option>
+                <option value="Inter">Inter (Modern Sans)</option>
+              </select>
+              <div class="align-selector-row">
+                <button class="align-btn" data-align="left" title="Align Left"><i class="fas fa-align-left"></i></button>
+                <button class="align-btn active" data-align="center" title="Align Center"><i class="fas fa-align-center"></i></button>
+                <button class="align-btn" data-align="right" title="Align Right"><i class="fas fa-align-right"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Font Size Slider -->
+          <div class="control-group">
+            <div class="slider-label-row">
+              <label class="control-label">Font Size</label>
+              <span class="slider-val" id="card-font-size-val">36px</span>
+            </div>
+            <input type="range" class="card-slider" id="card-font-size" min="20" max="60" value="36">
+          </div>
+
+          <!-- Toggle Switches -->
+          <div class="control-group toggles-group">
+            <label class="toggle-container">
+              <input type="checkbox" id="card-toggle-quotes" checked>
+              <span class="toggle-slider"></span>
+              <span class="toggle-text">Show Large Background Quotes</span>
+            </label>
+            <label class="toggle-container">
+              <input type="checkbox" id="card-toggle-border" checked>
+              <span class="toggle-slider"></span>
+              <span class="toggle-text">Show Elegant Gold Border</span>
+            </label>
+            <label class="toggle-container">
+              <input type="checkbox" id="card-toggle-watermark" checked>
+              <span class="toggle-slider"></span>
+              <span class="toggle-text">Show KJV App Watermark</span>
+            </label>
+          </div>
+
+          <!-- Text override option -->
+          <div class="control-group">
+            <label class="control-label">Edit Card Text</label>
+            <textarea class="card-textarea" id="card-verse-text-edit" rows="3" placeholder="Verse text..."></textarea>
+          </div>
+
+        </div>
+
+        <!-- Preview Column -->
+        <div class="card-preview-panel">
+          <div class="preview-canvas-wrapper" id="canvas-wrapper">
+            <canvas id="card-preview-canvas"></canvas>
+          </div>
+        </div>
+
+      </div>
+      <div class="card-modal-footer">
+        <button class="chapter-btn" id="btn-cancel-card"><i class="fas fa-xmark"></i> Cancel</button>
+        <button class="chapter-btn" id="btn-download-card" style="background-color: var(--accent-color); border-color: var(--accent-color); color: #ffffff; font-weight: 700; margin-left: auto;"><i class="fas fa-download"></i> Download PNG</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Biblical Name Meaning Tooltip -->
+  <div class="name-tooltip-container" id="name-tooltip">
+    <div class="name-tooltip-header">
+      <h4 class="name-tooltip-title" id="name-tooltip-title">Name</h4>
+      <span class="name-tooltip-badge">Hebrew Meaning</span>
+    </div>
+    <p class="name-tooltip-meaning" id="name-tooltip-meaning">Meaning details go here.</p>
+    <button class="name-tooltip-search-btn" id="btn-search-name-occurrences">
+      <i class="fas fa-search"></i> Search in Bible
+    </button>
+  </div>
+
+  <!-- Fullscreen Image Viewer Modal -->
+  <div class="image-viewer-modal" id="image-viewer-modal" style="display: none;">
+    <button class="image-viewer-close" id="btn-close-image-viewer" title="Close"><i class="fas fa-xmark"></i></button>
+    <div class="image-viewer-content">
+      <img id="image-viewer-img" src="" alt="Gustave Doré Bible Illustration">
+      <div class="image-viewer-caption">
+        <h4 id="image-viewer-title">Title</h4>
+        <p id="image-viewer-ref">Reference</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message from God Modal -->
+  <div class="bible-modal" id="message-god-modal">
+    <div class="bible-modal-content message-god-content" style="max-width: 500px; border-radius: var(--border-radius-lg);">
+      <div class="bible-modal-header">
+        <h3 class="bible-modal-title" style="color: var(--accent-color); font-family: var(--font-title);">
+          <i class="fas fa-envelope-open-text" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Message from God
+        </h3>
+        <button class="control-btn" id="btn-close-message-god"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="bible-modal-body" style="text-align: center;">
+        
+        <!-- Name Input View -->
+        <div id="msg-name-input-view">
+          <p style="font-size: 1rem; margin-bottom: 1.25rem; font-family: var(--font-sans); color: var(--text-primary);">
+            To personalize your message, please enter your name:
+          </p>
+          <input type="text" id="msg-user-name" placeholder="Your Name" style="width: 100%; max-width: 280px; padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-primary); font-size: 1rem; text-align: center; margin-bottom: 1.5rem; outline: none; font-family: var(--font-sans);" autocomplete="name">
+          <div>
+            <button class="chapter-btn" id="btn-submit-msg-name" style="margin: 0 auto; background-color: var(--accent-color); border-color: var(--accent-color); color: #fff; font-weight: 700; padding: 0.5rem 2rem;">
+              Receive Message
+            </button>
+          </div>
+        </div>
+
+        <!-- Message View -->
+        <div id="msg-content-view" style="display: none;">
+          <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 1.25rem; font-family: var(--font-sans);" id="msg-greeting">
+            Here is your message from God for today:
+          </div>
+          
+          <div style="background: rgba(212,175,55,0.05); border-left: 4px solid var(--accent-color); padding: 1.25rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0; text-align: left;">
+            <p id="msg-verse-text" style="font-size: 1.2rem; font-family: var(--font-serif); font-style: italic; line-height: 1.6; margin-bottom: 0.75rem; color: var(--text-primary);"></p>
+            <div id="msg-verse-ref" style="font-family: var(--font-sans); font-weight: 700; color: var(--accent-color); text-align: right; cursor: pointer; text-decoration: underline; font-size: 0.95rem;"></div>
+          </div>
+          
+          <div id="msg-reflection" style="font-size: 0.95rem; line-height: 1.6; color: var(--text-primary); font-family: var(--font-sans); text-align: justify; margin-bottom: 1.75rem;"></div>
+          
+          <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; align-items: center;">
+            <button class="chapter-btn" id="btn-msg-go-to-verse" style="padding: 0.5rem 0.85rem; font-size: 0.9rem;"><i class="fas fa-book-open"></i> Read Context</button>
+            <button class="chapter-btn" id="btn-msg-save-note" style="padding: 0.5rem 0.85rem; font-size: 0.9rem;"><i class="fas fa-edit"></i> Save Note</button>
+            <button class="chapter-btn" id="btn-msg-create-card" style="background-color: var(--accent-color); border-color: var(--accent-color); color: #fff; padding: 0.5rem 0.85rem; font-size: 0.9rem;"><i class="fas fa-image"></i> Create Card</button>
+            <button class="chapter-btn" id="btn-msg-reset-name" style="background: transparent; border-color: transparent; font-size: 0.8rem; opacity: 0.7; padding: 0.5rem;"><i class="fas fa-user-edit"></i> Change Name</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Backup & Restore Modal -->
+  <div class="bible-modal" id="backup-modal">
+    <div class="bible-modal-content" style="max-width: 480px; border-radius: var(--border-radius-lg);">
+      <div class="bible-modal-header">
+        <h3 class="bible-modal-title" style="color: var(--accent-color); font-family: var(--font-title);">
+          <i class="fas fa-cloud-arrow-down" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Backup & Restore
+        </h3>
+        <button class="control-btn" id="btn-close-backup"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="bible-modal-body" style="text-align: center; font-family: var(--font-sans); padding: 1.5rem 2rem;">
+        <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-primary); margin-bottom: 1.5rem; text-align: left;">
+          Save a copy of your study progress (bookmarks, highlights, and personal notes) to your computer, or restore data from a previous backup.
+        </p>
+        
+        <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+          <!-- Export Section -->
+          <div style="background: rgba(212,175,55,0.03); border: 1px dashed var(--accent-color); padding: 1.25rem; border-radius: 8px; text-align: left; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <h4 style="margin: 0 0 0.25rem 0; font-size: 0.95rem; font-weight: 700; color: var(--text-primary);">Export Data</h4>
+              <span style="font-size: 0.8rem; color: var(--text-secondary);">Download bookmarks, highlights & notes.</span>
+            </div>
+            <button class="chapter-btn" id="btn-export-data" style="background-color: var(--accent-color); border-color: var(--accent-color); color: #fff; font-weight: 700; font-size: 0.85rem; min-width: 90px; justify-content: center;"><i class="fas fa-download"></i> Export</button>
+          </div>
+          
+          <!-- Import Section -->
+          <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 8px; text-align: left;">
+            <h4 style="margin: 0 0 0.25rem 0; font-size: 0.95rem; font-weight: 700; color: var(--text-primary);">Import Data</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0 0 0.75rem 0;">Upload a previously exported backup JSON file. This will merge/overwrite your current data.</p>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <input type="file" id="import-file-input" accept=".json" style="display: none;">
+              <button class="chapter-btn" id="btn-select-import-file" style="font-size: 0.85rem; flex: 1; justify-content: center;"><i class="fas fa-file-code"></i> Select Backup File</button>
+              <span id="import-filename" style="font-size: 0.8rem; color: var(--text-secondary); max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">No file selected</span>
+            </div>
+          </div>
+
+          <!-- Danger Zone Section -->
+          <div style="background: rgba(176,26,32,0.03); border: 1px solid rgba(176,26,32,0.2); padding: 1rem; border-radius: 8px; text-align: left; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <h4 style="margin: 0 0 0.15rem 0; font-size: 0.9rem; font-weight: 700; color: var(--red-letter);">Reset Database</h4>
+              <span style="font-size: 0.75rem; color: var(--text-secondary);">Delete all notes, bookmarks, and highlights.</span>
+            </div>
+            <button class="chapter-btn" id="btn-clear-all-data" style="background-color: transparent; border-color: rgba(176,26,32,0.3); color: var(--red-letter); font-size: 0.85rem;"><i class="fas fa-triangle-exclamation"></i> Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script Implementation -->
+  <script src="app.js?v=3.2.0"></script>
+</body>
+</html>

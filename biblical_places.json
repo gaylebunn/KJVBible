@@ -1,0 +1,335 @@
+[
+  {
+    "id": "jerusalem",
+    "name": "Jerusalem",
+    "region": "Judea",
+    "significance": "The city of David, site of Solomon's Temple, and the location of our Lord's crucifixion, resurrection, and ascension.",
+    "ref": "2 Samuel 5:5, Luke 24:52",
+    "maps": {
+      "world": { "x": 56, "y": 53 },
+      "holyland": { "x": 48, "y": 62 }
+    },
+    "occurrences": {
+      "Genesis": [14],
+      "Joshua": [10, 15, 18],
+      "2 Samuel": [5, 6, 11, 12, 15, 24],
+      "Matthew": [2, 3, 4, 5, 15, 16, 20, 21, 23, 24, 25, 26, 27, 28],
+      "Mark": [11, 14, 15, 16],
+      "Luke": [2, 19, 24],
+      "John": [2, 5, 12, 19],
+      "Acts": [1, 2, 15]
+    }
+  },
+  {
+    "id": "bethlehem",
+    "name": "Bethlehem",
+    "region": "Judea",
+    "significance": "The birthplace of King David and our Savior, Jesus Christ, in fulfillment of Micah's prophecy.",
+    "ref": "Micah 5:2, Matthew 2:1, Luke 2:4",
+    "maps": {
+      "world": { "x": 56, "y": 54 },
+      "holyland": { "x": 48, "y": 66 }
+    },
+    "occurrences": {
+      "Genesis": [35],
+      "Ruth": [1, 4],
+      "1 Samuel": [16],
+      "Matthew": [2],
+      "Luke": [2]
+    }
+  },
+  {
+    "id": "nazareth",
+    "name": "Nazareth",
+    "region": "Galilee",
+    "significance": "The childhood home of Jesus Christ where He grew in wisdom and stature.",
+    "ref": "Luke 2:39, Matthew 2:23",
+    "maps": {
+      "world": { "x": 55, "y": 51 },
+      "holyland": { "x": 45, "y": 28 }
+    },
+    "occurrences": {
+      "Matthew": [2, 4, 21],
+      "Luke": [1, 2, 4],
+      "John": [1]
+    }
+  },
+  {
+    "id": "capernaum",
+    "name": "Capernaum",
+    "region": "Galilee",
+    "significance": "The center of Jesus' Galilean ministry, where He performed many miracles and taught in the synagogue.",
+    "ref": "Matthew 4:13, Mark 2:1, John 6:59",
+    "maps": {
+      "world": { "x": 56, "y": 50 },
+      "holyland": { "x": 59, "y": 21 }
+    },
+    "occurrences": {
+      "Matthew": [4, 8, 11],
+      "Mark": [1, 2],
+      "Luke": [4, 7],
+      "John": [4, 6]
+    }
+  },
+  {
+    "id": "egypt",
+    "name": "Egypt",
+    "region": "North Africa",
+    "significance": "The land where Israel was enslaved and delivered by God through Moses, and where the infant Jesus found refuge from Herod.",
+    "ref": "Exodus 12:41, Matthew 2:13",
+    "maps": {
+      "world": { "x": 44, "y": 70 },
+      "holyland": null
+    },
+    "occurrences": {
+      "Genesis": [12, 37, 39, 41, 42, 45, 46, 47, 50],
+      "Exodus": [1, 2, 3, 12, 14],
+      "Matthew": [2]
+    }
+  },
+  {
+    "id": "sinai",
+    "name": "Mount Sinai",
+    "region": "Sinai Peninsula",
+    "significance": "The sacred mountain where God spoke to Moses, delivered the Ten Commandments, and established His covenant with Israel.",
+    "ref": "Exodus 19:18, Galatians 4:24",
+    "maps": {
+      "world": { "x": 52, "y": 75 },
+      "holyland": null
+    },
+    "occurrences": {
+      "Exodus": [19, 20, 24, 32, 34],
+      "Leviticus": [27],
+      "Numbers": [1, 10],
+      "Galatians": [4]
+    }
+  },
+  {
+    "id": "babylon",
+    "name": "Babylon",
+    "region": "Mesopotamia",
+    "significance": "The capital of the Babylonian Empire where Judah was taken into captivity, and a biblical symbol of rebellion against God.",
+    "ref": "2 Kings 25:11, Daniel 1:1, Revelation 17:5",
+    "maps": {
+      "world": { "x": 80, "y": 52 },
+      "holyland": null
+    },
+    "occurrences": {
+      "2 Kings": [24, 25],
+      "Ezra": [1],
+      "Daniel": [1, 2, 3, 4, 5, 6],
+      "Matthew": [1],
+      "Revelation": [17, 18]
+    }
+  },
+  {
+    "id": "damascus",
+    "name": "Damascus",
+    "region": "Syria",
+    "significance": "An ancient capital and the location of Saul's dramatic conversion on the road to persecute Christians.",
+    "ref": "Acts 9:3, 2 Corinthians 11:32",
+    "maps": {
+      "world": { "x": 58, "y": 45 },
+      "holyland": null
+    },
+    "occurrences": {
+      "Genesis": [14, 15],
+      "2 Samuel": [8],
+      "1 Kings": [11, 19],
+      "2 Kings": [8],
+      "Acts": [9, 22, 26],
+      "2 Corinthians": [11]
+    }
+  },
+  {
+    "id": "antioch",
+    "name": "Antioch",
+    "region": "Syria",
+    "significance": "A major center of early Christianity where the disciples of Jesus were first called 'Christians.'",
+    "ref": "Acts 11:26, Galatians 2:11",
+    "maps": {
+      "world": { "x": 54, "y": 38 },
+      "holyland": null
+    },
+    "occurrences": {
+      "Acts": [11, 13, 14, 15, 18],
+      "Galatians": [2]
+    }
+  },
+  {
+    "id": "rome",
+    "name": "Rome",
+    "region": "Italy",
+    "significance": "The capital of the Roman Empire, where Paul preached under house arrest and both Paul and Peter were martyred.",
+    "ref": "Acts 28:16, Romans 1:7",
+    "maps": {
+      "world": { "x": 12, "y": 25 },
+      "holyland": null
+    },
+    "occurrences": {
+      "Acts": [2, 18, 19, 23, 28],
+      "Romans": [1],
+      "2 Timothy": [1]
+    }
+  },
+  {
+    "id": "ephesus",
+    "name": "Ephesus",
+    "region": "Asia Minor",
+    "significance": "A prominent city and center of Paul's third missionary journey, later addressed in Revelation as losing its 'first love.'",
+    "ref": "Acts 19:10, Revelation 2:1",
+    "maps": {
+      "world": { "x": 38, "y": 33 },
+      "holyland": null
+    },
+    "occurrences": {
+      "Acts": [18, 19, 20],
+      "Ephesians": [1],
+      "1 Timothy": [1],
+      "Revelation": [2]
+    }
+  },
+  {
+    "id": "jordan",
+    "name": "River Jordan",
+    "region": "Canaan",
+    "significance": "The river crossed by Israel to enter the Promised Land, and where John the Baptist baptized our Lord Jesus Christ.",
+    "ref": "Joshua 3:17, Matthew 3:13",
+    "maps": {
+      "world": { "x": 56, "y": 52 },
+      "holyland": { "x": 58, "y": 43 }
+    },
+    "occurrences": {
+      "Joshua": [3, 4],
+      "2 Kings": [2, 5],
+      "Matthew": [3],
+      "Mark": [1],
+      "Luke": [3],
+      "John": [1]
+    }
+  },
+  {
+    "id": "jericho",
+    "name": "Jericho",
+    "region": "Judea",
+    "significance": "An ancient walled city captured by Israel by faith, and where Jesus healed blind Bartimaeus and saved Zacchaeus.",
+    "ref": "Joshua 6:20, Luke 18:35, Luke 19:1",
+    "maps": {
+      "world": { "x": 56, "y": 53 },
+      "holyland": { "x": 58, "y": 60 }
+    },
+    "occurrences": {
+      "Joshua": [2, 6],
+      "Luke": [10, 18, 19]
+    }
+  },
+  {
+    "id": "hebron",
+    "name": "Hebron",
+    "region": "Judea",
+    "significance": "The burial site of Abraham, Isaac, and Jacob, and the city where David was first anointed king over Judah.",
+    "ref": "Genesis 23:19, 2 Samuel 2:11",
+    "maps": {
+      "world": { "x": 55, "y": 54 },
+      "holyland": { "x": 44, "y": 74 }
+    },
+    "occurrences": {
+      "Genesis": [23, 35, 37],
+      "Joshua": [10, 14],
+      "2 Samuel": [2, 5]
+    }
+  },
+  {
+    "id": "cana",
+    "name": "Cana",
+    "region": "Galilee",
+    "significance": "The village where Jesus performed His first public miracle, turning water into wine at a wedding feast.",
+    "ref": "John 2:11, John 4:46",
+    "maps": {
+      "world": { "x": 55, "y": 51 },
+      "holyland": { "x": 46, "y": 24 }
+    },
+    "occurrences": {
+      "John": [2, 4, 21]
+    }
+  },
+  {
+    "id": "beersheba",
+    "name": "Beersheba",
+    "region": "Judea",
+    "significance": "The place of Abraham's covenant well, representing the southern limit of the Promised Land ('from Dan to Beersheba').",
+    "ref": "Genesis 21:31, Genesis 46:1",
+    "maps": {
+      "world": { "x": 55, "y": 55 },
+      "holyland": { "x": 35, "y": 86 }
+    },
+    "occurrences": {
+      "Genesis": [21, 22, 26, 28, 46],
+      "1 Samuel": [3],
+      "1 Kings": [19]
+    }
+  },
+  {
+    "id": "nineveh",
+    "name": "Nineveh",
+    "region": "Mesopotamia",
+    "significance": "The capital of Assyria to which Jonah was sent to preach repentance, and which repented in sackcloth.",
+    "ref": "Jonah 3:3, Matthew 12:41",
+    "maps": {
+      "world": { "x": 78, "y": 38 },
+      "holyland": null
+    },
+    "occurrences": {
+      "Genesis": [10],
+      "Jonah": [1, 3, 4],
+      "Matthew": [12],
+      "Luke": [11]
+    }
+  },
+  {
+    "id": "ur",
+    "name": "Ur of the Chaldees",
+    "region": "Mesopotamia",
+    "significance": "The original homeland of Abram from which God called him to go to Canaan.",
+    "ref": "Genesis 11:31, Nehemiah 9:7",
+    "maps": {
+      "world": { "x": 85, "y": 60 },
+      "holyland": null
+    },
+    "occurrences": {
+      "Genesis": [11, 15],
+      "Nehemiah": [9]
+    }
+  },
+  {
+    "id": "shechem",
+    "name": "Shechem",
+    "region": "Samaria",
+    "significance": "Where Abraham built his first altar, where Jacob's well is located, and where Jesus met the Samaritan woman at the well.",
+    "ref": "Genesis 12:6, John 4:5",
+    "maps": {
+      "world": { "x": 55, "y": 52 },
+      "holyland": { "x": 48, "y": 45 }
+    },
+    "occurrences": {
+      "Genesis": [12, 33, 37],
+      "Joshua": [24],
+      "John": [4]
+    }
+  },
+  {
+    "id": "athens",
+    "name": "Athens",
+    "region": "Greece",
+    "significance": "The intellectual center of ancient Greece, where Paul preached on the Areopagus about the 'Unknown God.'",
+    "ref": "Acts 17:16, Acts 17:23",
+    "maps": {
+      "world": { "x": 28, "y": 35 },
+      "holyland": null
+    },
+    "occurrences": {
+      "Acts": [17],
+      "1 Thessalonians": [3]
+    }
+  }
+]
